@@ -1,0 +1,63 @@
+# Chrome Realtime Translator - 의존성 패키지
+
+# 음성인식 (STT)
+openai-whisper>=20231117
+faster-whisper>=0.10.0  # Whisper 최적화 버전
+
+# 번역
+transformers>=4.35.0
+torch>=2.0.0
+sentencepiece>=0.1.99
+accelerate>=0.25.0  # 모델 로딩 가속
+
+# 오디오 처리
+pyaudio>=0.2.14
+sounddevice>=0.4.6
+soundfile>=0.12.1
+webrtcvad>=2.0.10  # VAD (Voice Activity Detection)
+numpy>=1.24.0
+scipy>=1.11.0
+
+# UI 오버레이
+PyQt5>=5.15.0  # 또는 Tkinter (기본 포함)
+# tkinter는 Python 기본 포함
+
+# 시스템 오디오 캡처 (플랫폼별)
+# Linux: python-pulse-control, pyalsaaudio
+# Windows: pywin32, comtypes
+# macOS: pyobjc-framework-CoreAudio
+
+# 유틸리티
+python-dotenv>=1.0.0  # 환경변수 관리
+pyyaml>=6.0.1  # YAML 설정 파일 지원
+tqdm>=4.66.0  # 진행 표시
+colorama>=0.4.6  # 터미널 컬러 출력
+
+# 로깅 및 모니터링
+loguru>=0.7.2  # 향상된 로깅
+psutil>=5.9.0  # 시스템 리소스 모니터링
+
+# 테스트 (개발용)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+
+# 코드 품질 (개발용)
+black>=23.12.0
+flake8>=6.1.0
+mypy>=1.7.0
+pylint>=3.0.0
+isort>=5.13.0
+
+# 문서화 (개발용)
+sphinx>=7.2.0
+sphinx-rtd-theme>=2.0.0
+
+# 성능 프로파일링 (선택)
+# py-spy>=0.3.14
+# memory-profiler>=0.61.0
+
+# GPU 지원 (선택)
+# torch 설치 시 CUDA 버전에 맞춰 설치:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118

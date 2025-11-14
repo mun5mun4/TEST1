@@ -1,0 +1,113 @@
+# Chrome Realtime Translator - Git Ignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 프로젝트 특정
+# 설정 파일 (민감 정보 포함 가능)
+config.json
+.env
+.env.local
+
+# 캐시 디렉토리
+.cache/
+cache/
+__cache__/
+
+# 모델 파일 (용량이 크므로)
+models/
+*.pt
+*.pth
+*.onnx
+*.bin
+
+# 오디오 파일 (디버깅용)
+debug_audio_*.wav
+*.wav
+*.mp3
+*.flac
+
+# 로그 파일
+logs/
+*.log
+
+# 데이터베이스
+*.db
+*.sqlite
+*.sqlite3
+
+# 테스트 결과
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+.tox/
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# 문서 빌드
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# OS
+Thumbs.db
+.DS_Store
+*.bak
+*.tmp
+
+# 성능 프로파일링
+*.prof
+*.lprof
+
+# 배포
+*.spec
+build/
+dist/
+
+# 임시 파일
+temp/
+tmp/
+*.tmp

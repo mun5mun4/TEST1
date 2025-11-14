@@ -1,0 +1,86 @@
+{
+  "model_name": "tencent/Hunyuan-MT-7B",
+  "max_new_tokens": 256,
+  "use_cache": true,
+  "cache_dir": ".cache",
+  "log_level": "INFO",
+
+  "audio_capture": {
+    "sample_rate": 16000,
+    "channels": 1,
+    "chunk_size": 1024,
+    "target_process": "chrome",
+    "enable_vad": true,
+    "vad_aggressiveness": 2,
+    "silence_threshold": 0.01,
+    "min_speech_duration": 0.5,
+    "max_speech_duration": 30.0
+  },
+
+  "stt": {
+    "model_size": "medium",
+    "language": "en",
+    "device": "cuda",
+    "compute_type": "float16",
+    "beam_size": 5,
+    "best_of": 5,
+    "temperature": 0.0,
+    "condition_on_previous_text": true,
+    "initial_prompt": null,
+    "word_timestamps": false,
+    "vad_filter": true
+  },
+
+  "translation": {
+    "source_language": "en",
+    "target_language": "ko",
+    "model_name": "tencent/Hunyuan-MT-7B",
+    "device": "cuda",
+    "max_length": 512,
+    "num_beams": 4,
+    "temperature": 0.7,
+    "do_sample": false,
+    "use_cache": true,
+    "cache_size": 1000,
+    "batch_size": 8
+  },
+
+  "overlay": {
+    "enable": true,
+    "position": "bottom-center",
+    "offset_x": 0,
+    "offset_y": 100,
+    "width": 1200,
+    "height": 200,
+    "background_color": "#000000",
+    "background_opacity": 0.7,
+    "font_family": "Arial",
+    "font_size_original": 18,
+    "font_size_translation": 24,
+    "font_color_original": "#FFFFFF",
+    "font_color_translation": "#00FF00",
+    "display_duration": 5.0,
+    "fade_duration": 0.5,
+    "max_lines": 2,
+    "text_align": "center"
+  },
+
+  "performance": {
+    "stt_workers": 1,
+    "translation_workers": 2,
+    "max_concurrent_processing": 3,
+    "enable_gpu": true,
+    "gpu_memory_fraction": 0.8,
+    "optimize_memory": true
+  },
+
+  "debug": {
+    "save_debug_audio": false,
+    "debug_audio_dir": "debug_audio",
+    "show_performance_stats": true,
+    "stats_interval": 30.0,
+    "log_file": "logs/translator.log",
+    "log_rotation": "1 day",
+    "log_retention": "7 days"
+  }
+}
