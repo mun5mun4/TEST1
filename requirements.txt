@@ -19,12 +19,13 @@ numpy>=1.24.0
 scipy>=1.11.0
 
 # UI 오버레이
-PyQt5>=5.15.0  # 또는 Tkinter (기본 포함)
-# tkinter는 Python 기본 포함
+# Tkinter는 Python 기본 포함
+# Windows 전용 (클릭 투과 기능용)
+pywin32>=306  # Windows에서 필요
 
 # 시스템 오디오 캡처 (플랫폼별)
 # Linux: python-pulse-control, pyalsaaudio
-# Windows: pywin32, comtypes
+# Windows: pywin32 (위에 포함됨)
 # macOS: pyobjc-framework-CoreAudio
 
 # 유틸리티
