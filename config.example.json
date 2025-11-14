@@ -19,7 +19,7 @@
 
   "stt": {
     "model_size": "medium",
-    "language": "en",
+    "language": "ja",
     "device": "cuda",
     "compute_type": "float16",
     "beam_size": 5,
@@ -28,11 +28,13 @@
     "condition_on_previous_text": true,
     "initial_prompt": null,
     "word_timestamps": false,
-    "vad_filter": true
+    "vad_filter": true,
+    "min_audio_length": 1.0,
+    "max_audio_length": 10.0
   },
 
   "translation": {
-    "source_language": "en",
+    "source_language": "ja",
     "target_language": "ko",
     "model_name": "tencent/Hunyuan-MT-7B",
     "device": "cuda",

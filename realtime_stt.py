@@ -19,25 +19,55 @@ from pathlib import Path
 class RealtimeSTTConfig:
     """실시간 STT 설정"""
     def __init__(self):
+        # 기본값 설정
         self.model_size = "medium"  # medium 모델로 더 높은 정확도
-        self.language = "ja"  # 일본어 (ISO 639-1 코드)
+        self.language = "ja"  # 일본어 (ISO 639-1 코드) - 기본값
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.sample_rate = 16000
         self.min_audio_length = 1.0  # 최소 오디오 길이 (초)
         self.max_audio_length = 10.0  # 최대 오디오 길이 (초)
         self.initial_prompt = None
-        
+
         # 실시간 처리 최적화
         self.enable_vad = True  # Voice Activity Detection
         self.vad_threshold = 0.4
         self.beam_size = 1  # 빠른 처리를 위해 beam search 최소화
         self.patience = 1.0
-        
+
         # 후처리 필터
         self.suppress_tokens = [
-            "Thank you", "Thanks for", "ubscribe", "my channel", 
+            "Thank you", "Thanks for", "ubscribe", "my channel",
             "for watching", "Amara", "視聴", "ご視聴"
         ]
+
+        # config.json에서 설정 로드 시도
+        self.load_from_config()
+
+    def load_from_config(self):
+        """config.json에서 STT 설정 로드"""
+        try:
+            from pathlib import Path
+            import json
+
+            config_file = Path("config.json")
+            if not config_file.exists():
+                return  # config.json이 없으면 기본값 사용
+
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+
+            # stt 섹션에서 설정 읽기
+            if "stt" in config:
+                stt_config = config["stt"]
+                self.model_size = stt_config.get("model_size", self.model_size)
+                self.language = stt_config.get("language", self.language)
+                self.device = stt_config.get("device", self.device)
+                self.min_audio_length = stt_config.get("min_audio_length", self.min_audio_length)
+                self.max_audio_length = stt_config.get("max_audio_length", self.max_audio_length)
+                self.initial_prompt = stt_config.get("initial_prompt", self.initial_prompt)
+
+        except Exception:
+            pass  # 로드 실패 시 기본값 사용
 
 class RealtimeSTT:
     """실시간 Speech-to-Text 처리기"""

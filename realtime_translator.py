@@ -30,22 +30,53 @@ class RealtimeTranslatorConfig:
             temperature=0.7,
             repetition_penalty=1.05,
         )
-        
+
+        # 언어 설정 (기본값)
+        self.source_language = "ja"  # 원문 언어
+        self.target_language = "ko"  # 번역 대상 언어
+
         # 실시간 처리 최적화
         self.use_cache = True
         self.cache_dir = Path(".cache")
         self.batch_size = 4  # 배치 처리
         self.max_queue_size = 20
         self.translation_timeout = 10.0
-        
+
         # 필터링
         self.min_text_length = 2
         self.max_text_length = 500
         self.skip_duplicates = True
-        
+
         # 성능 최적화
         self.use_amp = True  # Mixed precision
         self.torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+
+        # config.json에서 설정 로드 시도
+        self.load_from_config()
+
+    def load_from_config(self):
+        """config.json에서 번역 설정 로드"""
+        try:
+            import json
+
+            config_file = Path("config.json")
+            if not config_file.exists():
+                return  # config.json이 없으면 기본값 사용
+
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+
+            # translation 섹션에서 설정 읽기
+            if "translation" in config:
+                trans_config = config["translation"]
+                self.source_language = trans_config.get("source_language", self.source_language)
+                self.target_language = trans_config.get("target_language", self.target_language)
+                self.model_name = trans_config.get("model_name", self.model_name)
+                self.use_cache = trans_config.get("use_cache", self.use_cache)
+                self.batch_size = trans_config.get("batch_size", self.batch_size)
+
+        except Exception:
+            pass  # 로드 실패 시 기본값 사용
 
 class RealtimeTranslator:
     """실시간 번역기 - h5.py 로직 기반"""
@@ -184,10 +215,21 @@ class RealtimeTranslator:
         start_time = time.time()
         
         try:
-            # 일본어→한국어 번역을 위한 최적화된 프롬프트
+            # 언어 이름 매핑 (ISO 639-1 코드 → 영어 이름)
+            language_names = {
+                "ja": "Japanese", "ko": "Korean", "en": "English",
+                "zh": "Chinese", "es": "Spanish", "fr": "French",
+                "de": "German", "ru": "Russian", "ar": "Arabic",
+                "pt": "Portuguese", "it": "Italian"
+            }
+
+            source_lang_name = language_names.get(self.config.source_language, self.config.source_language)
+            target_lang_name = language_names.get(self.config.target_language, self.config.target_language)
+
+            # 동적 번역 프롬프트 생성
             prompt = (
-                "Translate the following Japanese text into Korean. "
-                "Provide natural and accurate Korean translation. "
+                f"Translate the following {source_lang_name} text into {target_lang_name}. "
+                f"Provide natural and accurate {target_lang_name} translation. "
                 "Keep the original line breaks. Do not add any explanation.\n\n"
                 f"{text}"
             )
